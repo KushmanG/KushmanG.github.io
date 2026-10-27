@@ -28,15 +28,16 @@ window.SITE = {
   name: "Kushman Goyal",
   designation: "CSE Undergraduate · IIIT Bangalore",
   interests: ["AI / ML", "Physics"],          // 1st = orange dot, 2nd = blue dot
-  tagline: "Computer science by profession, physics by passion. I build ML systems, from LLM apps to deep models for scientific data.",
+  tagline: "Computer science by profession, Physics by passion.",
 
   // ---------------- My links (used in BOTH the hero buttons and the contact section) ----------------
   links: {
     email:    "kushman.goyal@iiitb.ac.in",
     phone:    "+91 98166 78887",               // set to "" to take it off the public site
     github:   "https://github.com/KushmanG",
-    linkedin: "",                              // TODO: paste my LinkedIn URL here
-    resume:   "",                              // drop resume.pdf next to index.html, then write "resume.pdf"
+    linkedin: "https://www.linkedin.com/in/kushman-goyal-93b512376/",                              
+    instagram: "https://www.instagram.com/kushmangoyal/",
+    youtube: "https://www.youtube.com/@KushmanGoyal"
   },
 
   // ---------------- Experience ----------------
@@ -120,7 +121,6 @@ window.SITE = {
       title:    "RAGCB",
       subtitle: "RAG ChatBot Builder",
       category: "AI · LLMs",
-      status:   "Open-sourcing",
       points: [
         "Add a **retrieval-augmented chatbot** to any site with a **one-line embed**",
         "Bring-your-own LLM API key",
@@ -133,20 +133,18 @@ window.SITE = {
       title:    "Orbit fitting",
       subtitle: "Orbit determination from telescope data",
       category: "Optimization",
-      status:   "In progress",
       points: [
         "**Least-squares** orbit fit to telescope RA / Dec observations",
         "**Convex vs non-convex** formulations on the same data",
         "Team project with Siddharth Arya & Manvik Kumar Gupta",
       ],
-      tags:  ["Least squares", "Non-convex", "Astronomy"],
+      tags:  ["Optimization", "Astronomy"],
       links: [{ label: "GitHub", url: "https://github.com/KushmanG/Orbit-Fitting-using-Telescopic-Data" }],
     },
     {
       title:    "NLDL",
       subtitle: "A programming language for nonlinear dynamics",
       category: "Compilers · C++",
-      status:   "In progress",
       points: [
         "A language for **physics & nonlinear-dynamics** systems (.nldl files)",
         "**Compiler written from scratch in C++**",
@@ -167,10 +165,10 @@ window.SITE = {
 
   // ---------------- Skill toolkit ----------------
   skills: [
-    { group: "AI / ML",               items: ["PyTorch", "CNNs", "RAG", "LoRA fine-tuning (MLX)", "LangGraph agents"] },
-    { group: "Languages & libraries", items: ["Python", "C++", "NumPy", "SciPy", "Matplotlib", "SFML"] },
+    { group: "AI / ML",               items: ["PyTorch", "Neural Networks", "RAG"] },
+    { group: "Languages & libraries", items: ["Python", "C++", "NumPy", "SciPy"] },
     { group: "Build & ship",          items: ["Clerk / Firebase · auth", "Supabase · database", "Railway / Vercel · deploy", "Claude Code"] },
-    { group: "Things I've built",     items: ["Physics engines", "CNN pipelines", "Web apps", "2D games"] },
+    { group: "Things I've built",     items: ["Physics engines", "Neural Networks", "Web apps"] },
   ],
 
   // ---------------- Contact ----------------
@@ -180,6 +178,8 @@ window.SITE = {
     extra: [
       // any other channel, same shape:
       // { label: "Kaggle", value: "kushmang", url: "https://www.kaggle.com/kushmang" },
+      { label: "Youtube", value: "Kushman Goyal", url: "https://www.youtube.com/@KushmanGoyal" },
+      { label: "Instagram", value: "kushmangoyal", url: "https://www.instagram.com/kushmangoyal/" },
     ],
   },
 
