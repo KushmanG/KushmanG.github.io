@@ -8,13 +8,11 @@
      copy one whole { ... }, block, paste it right below, change the text.
      Keep the comma after the closing }   ← 90% of breakages are a missing comma lol
   3. HIDE something without deleting it: put   hidden: true,   inside its { }.
-  4. A link left as "" just doesn't show up. So I can keep empty slots ready (Paper, LinkedIn, Résumé).
-  5. Formatting inside any text: **bold** → white bold, *italic* → orange italic. That's all.
-  6. Status pills colour themselves from the words I write:
-       idea / planned / exploring          → grey dashed
-       published / done / live / written   → blue
-       anything else (in progress etc.)    → orange
+  4. A link left as "" just doesn't show up. So I can keep empty slots ready (Paper, Résumé).
+  5. Formatting inside any text: **bold** → bold, *italic* → italic. That's all.
+  6. Files (PDFs etc.): drop them next to index.html, then link them by name, e.g. url: "collatz.pdf".
   7. Preview: double-click index.html.  Publish: git add .  →  git commit -m "update"  →  git push  (live in ~1 min).
+     index.html always fetches the newest copy of this file, so no stale-cache problem after a push.
 
   If the page goes blank or a red box shows up: I broke a comma or a quote.
   Open the browser console (Cmd + Option + J), it names the exact line.
@@ -27,18 +25,35 @@ window.SITE = {
   // ---------------- Hero (top of the page) ----------------
   name: "Kushman Goyal",
   designation: "CSE Undergraduate · IIIT Bangalore",
-  interests: ["AI / ML", "Physics"],          // 1st = orange dot, 2nd = blue dot
+  interests: ["AI / ML", "Physics"],
   tagline: "Computer science by profession, Physics by passion.",
 
-  // ---------------- My links (used in BOTH the hero buttons and the contact section) ----------------
+  // ---------------- My links (hero, channels band and contact all read from here) ----------------
   links: {
-    email:    "kushman.goyal@iiitb.ac.in",
-    phone:    "+91 98166 78887",               // set to "" to take it off the public site
-    github:   "https://github.com/KushmanG",
-    linkedin: "https://www.linkedin.com/in/kushman-goyal-93b512376/",                              
+    email:     "kushman.goyal@iiitb.ac.in",
+    phone:     "+91 98166 78887",               // set to "" to take it off the public site
+    github:    "https://github.com/KushmanG",
+    linkedin:  "https://www.linkedin.com/in/kushman-goyal-93b512376/",
     instagram: "https://www.instagram.com/kushmangoyal/",
-    youtube: "https://www.youtube.com/@KushmanGoyal"
+    youtube:   "https://www.youtube.com/@KushmanGoyal",
+    resume:    "",                               // drop resume.pdf next to index.html, then write "resume.pdf"
   },
+
+  // ---------------- YouTube + Instagram, the highlighted band right under the hero ----------------
+  channels: [
+    {
+      platform: "YouTube",
+      handle:   "@KushmanGoyal",
+      url:      "https://www.youtube.com/@KushmanGoyal",
+      blurb:    "Build logs and explainers on my projects, from physics engines to ML.",   // TODO: say it in my own words
+    },
+    {
+      platform: "Instagram",
+      handle:   "@kushmangoyal",
+      url:      "https://www.instagram.com/kushmangoyal/",
+      blurb:    "Short updates on what I'm building and learning.",                         // TODO: say it in my own words
+    },
+  ],
 
   // ---------------- Experience ----------------
   experience: [
@@ -67,33 +82,21 @@ window.SITE = {
     },
   ],
 
-  // ---------------- Research (ideas go here too: status "Idea" makes the pill grey) ----------------
+  // ---------------- Research ----------------
   research: [
     {
       title:  "CNNs that read plasma physics off a single snapshot",
       area:   "ML for physics",
-      status: "Paper in preparation",
+      year:   "2026 · paper in preparation",
       points: [
         "**Question:** how much physics can a CNN read from one static frame, beyond the classical g(r)?",
         "**Task:** infer coupling Γ and screening κ *jointly* (prior work fixes Γ)",
         "**Model:** PyTorch CNN, circular padding for periodic boundaries, global average pooling, one network per parameter",
         "**Baseline:** classical g(r) fitting, so gains must be real signal",
       ],
-      // optional infographic: steps of the pipeline, drawn as a numbered flow
-      pipeline: [
-        { step: "Simulate",  detail: "my own Langevin MD engine" },
-        { step: "Snapshot",  detail: "one frame of particle positions" },
-        { step: "Rasterize", detail: "positions → 2D density image" },
-        { step: "CNN",       detail: "PyTorch regressor" },
-        { step: "Γ, κ",      detail: "coupling & screening" },
-      ],
-      // optional big-number tiles
-      stats: [
-        { value: "1",       label: "static frame as input" },
-        { value: "2",       label: "parameters, inferred jointly" },
-        { value: "11 days", label: "to build the simulator" },
-      ],
-      tags:  ["PyTorch", "CNNs", "NumPy", "Inverse problems", "Molecular dynamics"],
+      // optional: the pipeline, drawn as one line of steps
+      pipeline: ["Simulate (my MD engine)", "Snapshot", "Rasterize", "CNN", "Γ, κ"],
+      tags:  ["PyTorch", "CNNs", "NumPy", "Molecular dynamics"],
       links: [
         { label: "Simulator code", url: "https://github.com/KushmanG/Yukawa-Dusty-Plasma-Molecular-Dynamics-Engine" },
         { label: "CNN code",       url: "https://github.com/KushmanG/YDP-Convolutional-Neural-Network" },
@@ -102,16 +105,18 @@ window.SITE = {
       ],
     },
     {
-      title:  "The Collatz conjecture, from scratch",
+      title:  "Halving Count Structure of Odd Integers in the Collatz Problem",
       area:   "Mathematics",
-      status: "Written up",
+      year:   "Independent",
       points: [
+        "Reduce Collatz to the odd numbers, then study the odd-to-odd map **f(x) = (3x + 1) / 2^(n(x)+1)**",
+        "Show the odd numbers split exactly into **arithmetic progressions**, one per halving count n, with no shared terms",
         "~1 year and ~200 pages of notes, worked on alone",
-        "Independently rediscovered the classical **parity-vector results** (Terras, Everett, Lagarias) via a ruler-sequence framing",
-        "Written up as an expository article",
       ],
       tags:  ["Number theory", "Discrete dynamics"],
-      links: [],
+      links: [
+        { label: "Read the paper (PDF)", url: "collatz.pdf" },
+      ],
     },
   ],
 
@@ -155,7 +160,7 @@ window.SITE = {
     },
   ],
 
-  // ---------------- Achievements (metric = the big text on the tile) ----------------
+  // ---------------- Achievements (metric = the bold bit on the left) ----------------
   achievements: [
     { metric: "Gold",     title: "WorldQuant BRAIN",                 detail: "Invited for a Quant Research Consultant role" },
     { metric: "Round 2",  title: "International Quant Championship", detail: "Qualified for the 2nd round of WorldQuant's IQC 2026" },
@@ -167,19 +172,17 @@ window.SITE = {
   skills: [
     { group: "AI / ML",               items: ["PyTorch", "Neural Networks", "RAG"] },
     { group: "Languages & libraries", items: ["Python", "C++", "NumPy", "SciPy"] },
-    { group: "Build & ship",          items: ["Clerk / Firebase · auth", "Supabase · database", "Railway / Vercel · deploy", "Claude Code"] },
+    { group: "Build & ship",          items: ["Clerk / Firebase (auth)", "Supabase (database)", "Railway / Vercel (deploy)", "Claude Code"] },
     { group: "Things I've built",     items: ["Physics engines", "Neural Networks", "Web apps"] },
   ],
 
   // ---------------- Contact ----------------
-  // Email / phone / GitHub / LinkedIn / résumé come from `links` above automatically.
+  // Email / phone / GitHub / LinkedIn / YouTube / Instagram / résumé come from `links` above automatically.
   contact: {
-    heading: "Open to *AI/ML internships* and research collaborations.",
+    heading: "Open to AI/ML internships and research collaborations.",
     extra: [
       // any other channel, same shape:
       // { label: "Kaggle", value: "kushmang", url: "https://www.kaggle.com/kushmang" },
-      { label: "Youtube", value: "Kushman Goyal", url: "https://www.youtube.com/@KushmanGoyal" },
-      { label: "Instagram", value: "kushmangoyal", url: "https://www.instagram.com/kushmangoyal/" },
     ],
   },
 

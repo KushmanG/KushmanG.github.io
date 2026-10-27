@@ -176,12 +176,12 @@
   /*
     Drawing:
     1. Bonds: ONE faint path for the whole mesh (cheap, and constant alpha = no shimmer).
-    2. Particles: calm = soft blue, disturbed = orange. "hot" = how far the smoothed kinetic energy is above thermal.
+    2. Particles: calm = soft blue on the white page, disturbed = orange. "hot" = how far the smoothed kinetic energy is above thermal.
   */
-  const CALM = [104, 150, 212];
+  const CALM = [128, 156, 200];      // soft blue on white
   const HOT = [214, 100, 42];
   function draw() {
-    ctx.fillStyle = "#0e0e0d";
+    ctx.fillStyle = "#ffffff";                                    // white page
     ctx.fillRect(0, 0, W, H);
 
     ctx.beginPath();
@@ -191,7 +191,7 @@
       ctx.moveTo(x0, y0);
       ctx.lineTo(x0 - bonds[k + 1] * scale, y0 - bonds[k + 2] * scale);   // draw to j's nearest image so edges look continuous
     }
-    ctx.strokeStyle = "rgba(137,135,129,0.14)";
+    ctx.strokeStyle = "rgba(40,50,70,0.09)";
     ctx.lineWidth = 1;
     ctx.stroke();
 
@@ -203,7 +203,7 @@
       const R = Math.round(CALM[0] + (HOT[0] - CALM[0]) * hot);
       const G = Math.round(CALM[1] + (HOT[1] - CALM[1]) * hot);
       const B = Math.round(CALM[2] + (HOT[2] - CALM[2]) * hot);
-      ctx.fillStyle = "rgba(" + R + "," + G + "," + B + "," + (0.1 + 0.25 * hot).toFixed(3) + ")";
+      ctx.fillStyle = "rgba(" + R + "," + G + "," + B + "," + (0.06 + 0.2 * hot).toFixed(3) + ")";
       ctx.beginPath(); ctx.arc(px, py, rad * (3 + 1.5 * hot), 0, 2 * Math.PI); ctx.fill();    // glow
       ctx.fillStyle = "rgb(" + R + "," + G + "," + B + ")";
       ctx.beginPath(); ctx.arc(px, py, rad * (1 + 0.35 * hot), 0, 2 * Math.PI); ctx.fill();   // particle
