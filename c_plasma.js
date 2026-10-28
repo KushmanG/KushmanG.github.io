@@ -1,5 +1,5 @@
 /*
-  c_plasma.js · the hero background
+  c_plasma.js · the page background (fixed behind everything)
   A real 2D Yukawa crystal, simulated live. Same physics as my Python engine, shrunk to ~150 particles.
 
   1. Reduced units: lengths in the Wigner-Seitz radius a, energies in Q²/(4πε₀a).
@@ -31,7 +31,6 @@
   const canvas = document.getElementById("plasma");
   if (!canvas || !canvas.getContext) return;
   const ctx = canvas.getContext("2d");
-  const hero = canvas.parentElement;
   const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   let W, H, N, Lx, Ly, scale, ox, oy;
@@ -191,7 +190,7 @@
       ctx.moveTo(x0, y0);
       ctx.lineTo(x0 - bonds[k + 1] * scale, y0 - bonds[k + 2] * scale);   // draw to j's nearest image so edges look continuous
     }
-    ctx.strokeStyle = "rgba(40,50,70,0.09)";
+    ctx.strokeStyle = "rgba(27,35,48,0.075)";
     ctx.lineWidth = 1;
     ctx.stroke();
 
@@ -226,11 +225,13 @@
       probe.x = e.clientX - rect.left; probe.y = e.clientY - rect.top; probe.on = true;
     };
     const release = function () { probe.on = false; };
-    hero.addEventListener("pointermove", aim);
-    hero.addEventListener("pointerdown", aim);
-    hero.addEventListener("pointerleave", release);
-    hero.addEventListener("pointercancel", release);
-    hero.addEventListener("pointerup", function (e) { if (e.pointerType !== "mouse") release(); });
+    // listen on the whole page now, the crystal sits behind every section
+    window.addEventListener("pointermove", aim, { passive: true });
+    window.addEventListener("pointerdown", aim, { passive: true });
+    document.documentElement.addEventListener("mouseleave", release);
+    window.addEventListener("pointercancel", release);
+    window.addEventListener("pointerup", function (e) { if (e.pointerType !== "mouse") release(); });
+    window.addEventListener("scroll", function () { if (!probe.on) return; release(); }, { passive: true });   // no ghost dents while scrolling
   }
 
   // ---------- caption stays truthful to the knobs ----------
@@ -241,16 +242,14 @@
       (INTERACTIVE && canHover && !reduceMotion ? " · hover to poke it" : "");
   }
 
-  // ---------- pause when the hero is off-screen, no point burning battery ----------
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (entries) { running = entries[0].isIntersecting; }).observe(canvas);
-  }
+  // ---------- pause when the tab is hidden, no point burning battery ----------
+  document.addEventListener("visibilitychange", function () { running = !document.hidden; });
 
   let resizeTimer;
   window.addEventListener("resize", function () {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () {
-      if (canvas.clientWidth === W && canvas.clientHeight === H) return;   // nothing actually changed
+      if (canvas.clientWidth === W && Math.abs(canvas.clientHeight - H) < 160) return;   // phone URL bar show/hide → ignore, don't reset the lattice
       setup(); draw();
     }, 200);
   });

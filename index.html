@@ -16,110 +16,123 @@
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23ffffff'/%3E%3Ccircle cx='10' cy='12' r='3' fill='%232a78d6'/%3E%3Ccircle cx='21' cy='10' r='3' fill='%232a78d6'/%3E%3Ccircle cx='16' cy='21' r='3' fill='%23d6642a'/%3E%3C/svg%3E">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Caveat:wght@500&display=swap" rel="stylesheet">
+
 <!--
   My portfolio, file map (pipeline order, same as my Python projects):
   1. index.html    → page skeleton + all the styling. I rarely touch this.
   2. a_content.js  → EVERY word, link, project, achievement. THE file I edit.
   3. b_render.js   → reads a_content.js and builds the sections.
-  4. c_plasma.js   → the live Yukawa crystal behind my name.
-  Look: plain white page, system fonts, one link colour. Built to read like a normal personal homepage, not a template.
+  4. c_plasma.js   → the live Yukawa crystal, fixed behind the whole page.
+  Look:
+  1. Ink-blue text on white, my plot palette for colour (blue #2a78d6, orange #d6642a). Not the usual AI-template beige + serif.
+  2. Young Serif for names/titles, normal system font for reading, one handwritten note (Caveat) and that's it.
+  3. The content column is a feathered white "sheet" so text stays readable over the crystal.
 -->
 <style>
   :root {
-    --bg: #ffffff;
-    --text: #1d1d1f;
-    --text-2: #3c3c40;
-    --muted: #6e6e73;
-    --rule: #e5e5e5;
-    --link: #1f5fbf;
+    --ink: #1b2330;
+    --ink-2: #3a4456;
+    --muted: #697184;
+    --rule: #e3e6ec;
+    --blue: #2a78d6;
+    --link: #1f63b8;
+    --orange: #d6642a;
     --yt: #d62718;
     --ig: #b5306f;
+    --serif: "Young Serif", Georgia, serif;
+    --hand: "Caveat", "Comic Sans MS", cursive;
     --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
     --maxw: 880px;
     --gutter: clamp(18px, 4vw, 40px);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+  html { background: #fff; scroll-behavior: smooth; scroll-padding-top: 64px; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-  body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-  a { color: var(--link); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-  a:hover { text-decoration-thickness: 2px; }
-  :focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
-  strong { font-weight: 600; color: var(--text); }
+  body { background: transparent; color: var(--ink); font-family: var(--font); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--link); text-decoration: underline; text-decoration-color: rgba(214,100,42,0.55); text-decoration-thickness: 1.5px; text-underline-offset: 3px; transition: color .15s; }
+  a:hover { color: var(--orange); text-decoration-color: var(--orange); }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  strong { font-weight: 600; color: var(--ink); }
+  em { font-style: italic; }
+
+  /* the crystal: fixed behind the whole page */
+  #plasma { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100lvh; z-index: -1; display: block; }
 
   /* ---------- Nav ---------- */
   .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; transition: background .2s, border-color .2s; border-bottom: 1px solid transparent; }
-  .nav.solid { background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom-color: var(--rule); }
+  .nav.solid { background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom-color: var(--rule); }
   .nav-inner { max-width: var(--maxw); margin: 0 auto; padding: 14px var(--gutter); display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 14px; }
-  .nav .mark { color: var(--text); text-decoration: none; font-weight: 600; white-space: nowrap; }
+  .nav .mark { color: var(--ink); text-decoration: none; font-family: var(--serif); font-size: 17px; white-space: nowrap; }
+  .nav .mark::after { content: "."; color: var(--orange); }
   .nav .links { display: flex; gap: 18px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
   .nav .links::-webkit-scrollbar { display: none; }
   .nav .links a { color: var(--muted); text-decoration: none; white-space: nowrap; }
-  .nav .links a:hover { color: var(--text); }
+  .nav .links a:hover { color: var(--orange); }
 
   /* ---------- Hero ---------- */
-  .hero { position: relative; min-height: 460px; height: 66svh; max-height: 720px; overflow: hidden; border-bottom: 1px solid var(--rule); }
-  #plasma { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .hero { position: relative; min-height: 440px; height: 62svh; max-height: 680px; }
   .hero-fade { position: absolute; inset: 0; pointer-events: none;
-    background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.92) 34%, rgba(255,255,255,0.35) 62%, rgba(255,255,255,0) 85%),
-                linear-gradient(0deg, #fff 0%, rgba(255,255,255,0) 30%); }
-  .hero-wrap { position: absolute; inset: auto 0 0 0; padding-bottom: clamp(32px, 7vh, 64px); pointer-events: none; }
+    background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.9) 32%, rgba(255,255,255,0.3) 60%, rgba(255,255,255,0) 82%);
+    -webkit-mask-image: linear-gradient(180deg, #000 65%, transparent); mask-image: linear-gradient(180deg, #000 65%, transparent); }   /* fade out at the bottom so there's no seam into the page */
+  .hero-wrap { position: absolute; inset: auto 0 0 0; padding-bottom: clamp(28px, 6vh, 56px); pointer-events: none; }
   .hero-inner { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
   .hero-inner a { pointer-events: auto; }
-  .hero h1 { font-size: clamp(40px, 6.4vw, 64px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.05; }
-  .designation { margin-top: 10px; font-size: 18px; color: var(--text-2); }
-  .designation .sep { color: #b8b8bd; margin: 0 4px; }
-  .tagline { margin-top: 4px; font-size: 18px; color: var(--muted); }
-  .hero-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-  .btn { display: inline-block; padding: 10px 18px; border-radius: 6px; color: #fff; font-weight: 600; font-size: 15px; text-decoration: none; }
-  .btn:hover { text-decoration: none; filter: brightness(1.08); }
-  .btn-yt { background: var(--yt); }
-  .btn-ig { background: var(--ig); }
-  .hero-quiet { margin-top: 14px; font-size: 15px; }
-  .hero-quiet a { margin-right: 16px; }
-  .hero-caption { position: absolute; right: var(--gutter); bottom: 14px; font-size: 12px; color: #9a9aa0; pointer-events: none; }
+  .hero h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(44px, 7vw, 74px); letter-spacing: -0.01em; line-height: 1.02; color: var(--ink); }
+  .hero h1::after { content: "."; color: var(--orange); }
+  .hand-note { font-family: var(--hand); font-size: 23px; line-height: 1.15; color: var(--orange); transform: rotate(-2deg); transform-origin: left; margin: 8px 0 2px 4px; max-width: 420px; }
+  .designation { margin-top: 12px; font-size: 18px; color: var(--ink-2); }
+  .designation .sep { color: var(--orange); margin: 0 6px; }
+  .tagline { margin-top: 2px; font-size: 18px; color: var(--muted); font-style: italic; }
+  .hero-quiet { margin-top: 18px; font-size: 16px; }
+  .hero-quiet a { margin-right: 18px; font-weight: 500; }
+  .hero-caption { position: absolute; right: var(--gutter); bottom: 12px; font-size: 12px; color: #9aa1ae; pointer-events: none; }
 
-  /* ---------- Page ---------- */
-  main { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+  /* ---------- Page (a feathered white sheet over the crystal) ---------- */
+  main { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); background: rgba(255,255,255,0.84); box-shadow: 0 0 70px 50px rgba(255,255,255,0.84); }
   .section { padding: 40px 0 8px; }
-  .section h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; padding-bottom: 10px; border-bottom: 1px solid var(--rule); margin-bottom: 4px; }
+  .section h2 { font-family: var(--serif); font-weight: 400; font-size: 27px; letter-spacing: -0.005em; padding-bottom: 10px; border-bottom: 1px solid var(--rule); margin-bottom: 4px; }
+  .section h2 span { background: linear-gradient(transparent 60%, rgba(214,100,42,0.2) 60%, rgba(214,100,42,0.2) 92%, transparent 92%); padding: 0 3px; }
 
-  .entry { display: grid; grid-template-columns: 160px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid #f0f0f0; }
+  .entry { display: grid; grid-template-columns: 160px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px dashed var(--rule); }
   .entry:last-child { border-bottom: 0; }
-  .meta { font-size: 14px; color: var(--muted); line-height: 1.5; font-variant-numeric: tabular-nums; }
-  .body h3 { font-size: 17px; font-weight: 600; line-height: 1.35; }
-  .body .h3-sub { font-weight: 400; color: var(--muted); }
-  .body .sub { color: var(--text-2); font-size: 15px; margin-top: 2px; }
-  .body ul { margin: 8px 0 0 18px; color: var(--text-2); font-size: 15px; }
+  .meta { font-size: 13.5px; color: var(--blue); line-height: 1.5; font-variant-numeric: tabular-nums; letter-spacing: .01em; }
+  .body h3 { font-size: 17px; font-weight: 600; line-height: 1.35; color: var(--ink); }
+  .sec-research .body h3, .sec-projects .body h3 { font-family: var(--serif); font-weight: 400; font-size: 20px; }
+  .body .h3-sub { font-family: var(--font); font-weight: 400; font-size: 15px; color: var(--muted); }
+  .body .sub { color: var(--ink-2); font-size: 15px; margin-top: 2px; }
+  .body ul { margin: 8px 0 0 18px; color: var(--ink-2); font-size: 15px; }
   .body li { margin-top: 3px; padding-left: 2px; }
-  .body li::marker { color: #a0a0a6; }
-  .tags { margin-top: 8px; font-size: 13.5px; color: var(--muted); }
-  .tags .label { color: var(--text-2); }
+  .body li::marker { color: var(--orange); }
+  .tags { margin-top: 8px; font-size: 13.5px; color: #5b6b85; }
+  .tags .label { color: var(--ink-2); }
   .links { margin-top: 8px; font-size: 14.5px; }
-  .links a { margin-right: 16px; }
-  .flow { margin-top: 8px; font-size: 14px; color: var(--text-2); display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
-  .flow .arrow { color: #a0a0a6; }
+  .links a { margin-right: 16px; font-weight: 500; }
+  .flow { margin-top: 8px; font-size: 13.5px; color: var(--blue); display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+  .flow .arrow { color: var(--orange); }
+  .metric { font-family: var(--serif); font-size: 20px; color: var(--orange); }
+  .skill-items { color: var(--ink-2); font-size: 15px; }
   .sec-skills .entry, .sec-contact .entry { padding: 11px 0; }
-  .metric { font-size: 17px; font-weight: 700; color: var(--text); }
-  .skill-items { color: var(--text-2); font-size: 15px; }
-  .contact-head { font-size: 18px; color: var(--text-2); margin: 14px 0 4px; }
+  .contact-head { font-family: var(--serif); font-size: 22px; color: var(--ink); margin: 16px 0 6px; }
   .contact-value { font-size: 15px; overflow-wrap: anywhere; }
 
   /* YouTube + Instagram band */
   .sec-channels { padding-top: 32px; }
   .channels { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .channel { display: flex; flex-direction: column; padding: 18px 20px 18px 22px; border: 1px solid var(--rule); border-left-width: 5px; border-radius: 4px; color: var(--text); text-decoration: none; transition: background .15s; }
-  .channel:hover { background: #fafafa; text-decoration: none; }
+  .channel { display: flex; flex-direction: column; padding: 18px 20px 18px 22px; background: #fff; border: 1px solid var(--rule); border-left-width: 5px; border-radius: 4px; color: var(--ink); text-decoration: none; transition: transform .15s, box-shadow .15s; }
+  .channel:hover { color: var(--ink); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(27,35,48,0.08); }
   .ch-yt { border-left-color: var(--yt); }
   .ch-ig { border-left-color: var(--ig); }
-  .ch-platform { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+  .ch-platform { font-family: var(--serif); font-size: 22px; }
   .ch-handle { font-size: 14px; color: var(--muted); }
-  .ch-blurb { margin-top: 8px; font-size: 15px; color: var(--text-2); }
+  .ch-blurb { margin-top: 8px; font-size: 15px; color: var(--ink-2); }
   .ch-cta { margin-top: 12px; font-size: 14.5px; font-weight: 600; }
   .ch-yt .ch-cta { color: var(--yt); }
   .ch-ig .ch-cta { color: var(--ig); }
 
-  .footer { max-width: var(--maxw); margin: 40px auto 0; padding: 20px var(--gutter) 36px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--muted); }
+  .footer { max-width: var(--maxw); margin: 40px auto 0; padding: 20px var(--gutter) 36px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--muted); background: rgba(255,255,255,0.84); }
 
   /* content-file problems (see b_render.js) */
   .broken { margin: 48px 0; padding: 18px 20px; border: 1px solid var(--yt); border-radius: 4px; }
@@ -128,12 +141,14 @@
   /* ---------- Responsive ---------- */
   @media (max-width: 640px) {
     .nav .links { -webkit-mask-image: linear-gradient(90deg, #000 80%, transparent); mask-image: linear-gradient(90deg, #000 80%, transparent); padding-right: 20px; }
-    .hero { height: 78svh; }
-    .hero-fade { background: linear-gradient(0deg, #fff 0%, rgba(255,255,255,0.94) 50%, rgba(255,255,255,0.4) 75%, rgba(255,255,255,0) 100%); }
+    .hero { height: 74svh; }
+    .hero-fade { background: linear-gradient(0deg, #fff 0%, rgba(255,255,255,0.92) 50%, rgba(255,255,255,0.35) 78%, rgba(255,255,255,0) 100%); }
     .hero-caption { display: none; }
     .designation, .tagline { font-size: 16px; }
+    .hand-note { font-size: 20px; }
     .channels { grid-template-columns: 1fr; }
     .entry { grid-template-columns: 1fr; gap: 4px; }
+    main { box-shadow: 0 0 40px 30px rgba(255,255,255,0.84); }
   }
 </style>
 </head>
@@ -146,8 +161,9 @@
   </div>
 </nav>
 
+<canvas id="plasma" aria-hidden="true"></canvas>
+
 <header class="hero" id="top">
-  <canvas id="plasma" aria-hidden="true"></canvas>
   <div class="hero-fade"></div>
   <div class="hero-wrap"><div class="hero-inner" id="hero"></div></div>
   <div class="hero-caption" id="heroCaption"></div>

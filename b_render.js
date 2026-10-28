@@ -106,11 +106,7 @@
   function renderHero(site) {
     const L = site.links || {};
 
-    // YouTube + Instagram are the loud buttons, everything else is a quiet text link
-    const loud = [];
-    if (cleanUrl(L.youtube))   loud.push(a("YouTube ↗", L.youtube, "btn btn-yt"));
-    if (cleanUrl(L.instagram)) loud.push(a("Instagram ↗", L.instagram, "btn btn-ig"));
-
+    // YouTube + Instagram live in the highlighted band right below, so the hero only keeps the quiet links
     const quiet = [];
     if (cleanUrl(L.github))   quiet.push(a("GitHub", L.github));
     if (cleanUrl(L.linkedin)) quiet.push(a("LinkedIn", L.linkedin));
@@ -119,9 +115,9 @@
 
     return `
       <h1>${esc(site.name)}</h1>
+      ${site.heroNote ? '<p class="hand-note">' + esc(site.heroNote) + "</p>" : ""}
       <p class="designation">${esc(site.designation)}${shown(site.interests).length ? ' <span class="sep">/</span> ' + shown(site.interests).map(esc).join(" · ") : ""}</p>
       ${site.tagline ? '<p class="tagline">' + fmt(site.tagline) + "</p>" : ""}
-      ${loud.length ? '<div class="hero-buttons">' + loud.join("") + "</div>" : ""}
       ${quiet.length ? '<p class="hero-quiet">' + quiet.join("") + "</p>" : ""}`;
   }
 
@@ -337,7 +333,7 @@
       built.push({
         id: s[0],
         nav: s[1],
-        html: '<section class="section sec-' + s[0] + '" id="' + s[0] + '">' + (s[2] ? "<h2>" + esc(s[2]) + "</h2>" : "") + inner + "</section>",
+        html: '<section class="section sec-' + s[0] + '" id="' + s[0] + '">' + (s[2] ? "<h2><span>" + esc(s[2]) + "</span></h2>" : "") + inner + "</section>",
       });
     });
 
