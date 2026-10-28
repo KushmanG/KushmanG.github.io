@@ -186,7 +186,6 @@ window.SITE = {
     ],
   },
 
-  footnote: "Background: a 2D Yukawa crystal, simulated live in your browser.",
 };
 
 // Program Completed
