@@ -27,7 +27,6 @@ window.SITE = {
   designation: "CSE Undergraduate · IIIT Bangalore",
   interests: ["AI / ML", "Physics"],
   tagline: "Computer science by profession, Physics by passion.",
-  heroNote: "psst, the dots behind this page are a real plasma simulation. poke them ↘",   // handwritten note next to my name, "" to remove
 
   // ---------------- My links (hero, channels band and contact all read from here) ----------------
   links: {
