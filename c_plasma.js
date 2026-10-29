@@ -175,12 +175,12 @@
   /*
     Drawing:
     1. Bonds: ONE faint path for the whole mesh (cheap, and constant alpha = no shimmer).
-    2. Particles: calm = pale blue, disturbed = yellow. "hot" = how far the smoothed kinetic energy is above thermal.
+    2. Particles: calm = grey, disturbed = white. "hot" = how far the smoothed kinetic energy is above thermal.
   */
-  const CALM = [150, 182, 218];      // pale blueprint blue
-  const HOT = [244, 211, 94];        // poked particles glow yellow
+  const CALM = [150, 150, 150];      // grey
+  const HOT = [255, 255, 255];       // poked particles glow white
   function draw() {
-    ctx.fillStyle = "#1F3A5F";                                    // blueprint blue
+    ctx.fillStyle = "#000000";                                    // black
     ctx.fillRect(0, 0, W, H);
 
     ctx.beginPath();
@@ -190,7 +190,7 @@
       ctx.moveTo(x0, y0);
       ctx.lineTo(x0 - bonds[k + 1] * scale, y0 - bonds[k + 2] * scale);   // draw to j's nearest image so edges look continuous
     }
-    ctx.strokeStyle = "rgba(234,240,246,0.10)";   // pale blueprint lines
+    ctx.strokeStyle = "rgba(255,255,255,0.09)";   // faint white lines
     ctx.lineWidth = 1;
     ctx.stroke();
 

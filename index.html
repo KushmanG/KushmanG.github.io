@@ -13,8 +13,8 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kushmang.github.io/">
 <link rel="canonical" href="https://kushmang.github.io/">
-<meta name="theme-color" content="#1F3A5F">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230B1215'/%3E%3Ccircle cx='10' cy='12' r='3' fill='%23F4D35E'/%3E%3Ccircle cx='21' cy='10' r='3' fill='%23F4D35E'/%3E%3Ccircle cx='16' cy='21' r='3' fill='%23EAF0F6'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230B1215'/%3E%3Ccircle cx='10' cy='12' r='3' fill='%23FFFFFF'/%3E%3Ccircle cx='21' cy='10' r='3' fill='%23FFFFFF'/%3E%3Ccircle cx='16' cy='21' r='3' fill='%23FFFFFF'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,21 +27,21 @@
   3. b_render.js   → reads a_content.js and builds the sections.
   4. c_plasma.js   → the live Yukawa crystal, fixed behind the whole page.
   Look:
-  1. "Blueprint" palette: bg #1F3A5F (blueprint blue), surface #1A3354, text #EAF0F6, one accent yellow #F4D35E for everything coloured.
+  1. Black & white: bg #000000, panels #0E0E0E, text + every accent in white, greys for secondary text.
   2. Young Serif for names/titles, normal system font for reading, one handwritten note (Caveat) and that's it.
   3. The content column is a feathered white "sheet" so text stays readable over the crystal.
 -->
 <style>
   :root {
-    --ink: #EAF0F6;
-    --ink-2: #C9D6E4;
-    --muted: #9FB3CA;
-    --rule: #3A5A82;
-    --blue: #F4D35E;
-    --link: #F4D35E;
-    --orange: #F4D35E;
-    --yt: #F4D35E;
-    --ig: #F4D35E;
+    --ink: #FFFFFF;
+    --ink-2: #D6D6D6;
+    --muted: #A3A3A3;
+    --rule: #2E2E2E;
+    --blue: #FFFFFF;
+    --link: #FFFFFF;
+    --orange: #FFFFFF;
+    --yt: #FFFFFF;
+    --ig: #FFFFFF;
     --serif: "Young Serif", Georgia, serif;
     --hand: "Caveat", "Comic Sans MS", cursive;
     --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -49,10 +49,10 @@
     --gutter: clamp(18px, 4vw, 40px);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { background: #1F3A5F; scroll-behavior: smooth; scroll-padding-top: 64px; }
+  html { background: #000000; scroll-behavior: smooth; scroll-padding-top: 64px; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body { background: transparent; color: var(--ink); font-family: var(--font); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-  a { color: var(--link); text-decoration: underline; text-decoration-color: rgba(244,211,94,0.5); text-decoration-thickness: 1.5px; text-underline-offset: 3px; transition: color .15s; }
+  a { color: var(--link); text-decoration: underline; text-decoration-color: rgba(255,255,255,0.5); text-decoration-thickness: 1.5px; text-underline-offset: 3px; transition: color .15s; }
   a:hover { color: var(--orange); text-decoration-color: var(--orange); }
   :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
   strong { font-weight: 600; color: var(--ink); }
@@ -63,7 +63,7 @@
 
   /* ---------- Nav ---------- */
   .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; transition: background .2s, border-color .2s; border-bottom: 1px solid transparent; }
-  .nav.solid { background: rgba(31,58,95,0.9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom-color: var(--rule); }
+  .nav.solid { background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom-color: var(--rule); }
   .nav-inner { max-width: var(--maxw); margin: 0 auto; padding: 14px var(--gutter); display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 14px; }
   .nav .mark { color: var(--ink); text-decoration: none; font-family: var(--serif); font-size: 17px; white-space: nowrap; }
   .nav .mark::after { content: "."; color: var(--orange); }
@@ -75,7 +75,7 @@
   /* ---------- Hero ---------- */
   .hero { position: relative; min-height: 440px; height: 62svh; max-height: 680px; }
   .hero-fade { position: absolute; inset: 0; pointer-events: none;
-    background: linear-gradient(90deg, #1F3A5F 0%, rgba(31,58,95,0.9) 32%, rgba(31,58,95,0.3) 60%, rgba(31,58,95,0) 82%);
+    background: linear-gradient(90deg, #000000 0%, rgba(0,0,0,0.9) 32%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 82%);
     -webkit-mask-image: linear-gradient(180deg, #000 65%, transparent); mask-image: linear-gradient(180deg, #000 65%, transparent); }   /* fade out at the bottom so there's no seam into the page */
   .hero-wrap { position: absolute; inset: auto 0 0 0; padding-bottom: clamp(28px, 6vh, 56px); pointer-events: none; }
   .hero-inner { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
@@ -88,13 +88,13 @@
   .tagline { margin-top: 2px; font-size: 18px; color: var(--muted); font-style: italic; }
   .hero-quiet { margin-top: 18px; font-size: 16px; }
   .hero-quiet a { margin-right: 18px; font-weight: 500; }
-  .hero-caption { position: absolute; right: var(--gutter); bottom: 12px; font-size: 12px; color: #8197B3; pointer-events: none; }
+  .hero-caption { position: absolute; right: var(--gutter); bottom: 12px; font-size: 12px; color: #7A7A7A; pointer-events: none; }
 
   /* ---------- Page (a feathered white sheet over the crystal) ---------- */
-  main { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); background: rgba(31,58,95,0.84); box-shadow: 0 0 70px 50px rgba(31,58,95,0.84); }
+  main { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); background: rgba(0,0,0,0.84); box-shadow: 0 0 70px 50px rgba(0,0,0,0.84); }
   .section { padding: 40px 0 8px; }
   .section h2 { font-family: var(--serif); font-weight: 400; font-size: 27px; letter-spacing: -0.005em; padding-bottom: 10px; border-bottom: 1px solid var(--rule); margin-bottom: 4px; }
-  .section h2 span { background: linear-gradient(transparent 86%, #F4D35E 86%, #F4D35E 96%, transparent 96%); padding: 0 1px; }
+  .section h2 span { background: linear-gradient(transparent 86%, #FFFFFF 86%, #FFFFFF 96%, transparent 96%); padding: 0 1px; }
 
   .entry { display: grid; grid-template-columns: 160px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px dashed var(--rule); }
   .entry:last-child { border-bottom: 0; }
@@ -106,7 +106,7 @@
   .body ul { margin: 8px 0 0 18px; color: var(--ink-2); font-size: 15px; }
   .body li { margin-top: 3px; padding-left: 2px; }
   .body li::marker { color: var(--orange); }
-  .tags { margin-top: 8px; font-size: 13.5px; color: #9FB3CA; }
+  .tags { margin-top: 8px; font-size: 13.5px; color: #A3A3A3; }
   .tags .label { color: var(--ink-2); }
   .links { margin-top: 8px; font-size: 14.5px; }
   .links a { margin-right: 16px; font-weight: 500; }
@@ -121,7 +121,7 @@
   /* YouTube + Instagram band */
   .sec-channels { padding-top: 32px; }
   .channels { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .channel { display: flex; flex-direction: column; padding: 18px 20px 18px 22px; background: #1A3354; border: 1px solid var(--rule); border-left-width: 5px; border-radius: 4px; color: var(--ink); text-decoration: none; transition: transform .15s, box-shadow .15s; }
+  .channel { display: flex; flex-direction: column; padding: 18px 20px 18px 22px; background: #0E0E0E; border: 1px solid var(--rule); border-left-width: 5px; border-radius: 4px; color: var(--ink); text-decoration: none; transition: transform .15s, box-shadow .15s; }
   .channel:hover { color: var(--ink); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
   .ch-yt { border-left-color: var(--yt); }
   .ch-ig { border-left-color: var(--ig); }
@@ -132,23 +132,23 @@
   .ch-yt .ch-cta { color: var(--yt); }
   .ch-ig .ch-cta { color: var(--ig); }
 
-  .footer { max-width: var(--maxw); margin: 40px auto 0; padding: 20px var(--gutter) 36px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--muted); background: rgba(31,58,95,0.84); }
+  .footer { max-width: var(--maxw); margin: 40px auto 0; padding: 20px var(--gutter) 36px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--muted); background: rgba(0,0,0,0.84); }
 
   /* content-file problems (see b_render.js) */
   .broken { margin: 48px 0; padding: 18px 20px; border: 1px solid var(--yt); border-radius: 4px; }
-  .warn { position: fixed; right: 16px; bottom: 16px; z-index: 99; max-width: 360px; padding: 12px 14px; background: #1A3354; border: 1px solid var(--yt); border-radius: 4px; font-size: 13px; line-height: 1.6; }
+  .warn { position: fixed; right: 16px; bottom: 16px; z-index: 99; max-width: 360px; padding: 12px 14px; background: #0E0E0E; border: 1px solid var(--yt); border-radius: 4px; font-size: 13px; line-height: 1.6; }
 
   /* ---------- Responsive ---------- */
   @media (max-width: 640px) {
     .nav .links { -webkit-mask-image: linear-gradient(90deg, #000 80%, transparent); mask-image: linear-gradient(90deg, #000 80%, transparent); padding-right: 20px; }
     .hero { height: 74svh; }
-    .hero-fade { background: linear-gradient(0deg, #1F3A5F 0%, rgba(31,58,95,0.92) 50%, rgba(31,58,95,0.35) 78%, rgba(31,58,95,0) 100%); }
+    .hero-fade { background: linear-gradient(0deg, #000000 0%, rgba(0,0,0,0.92) 50%, rgba(0,0,0,0.35) 78%, rgba(0,0,0,0) 100%); }
     .hero-caption { display: none; }
     .designation, .tagline { font-size: 16px; }
     .hand-note { font-size: 20px; }
     .channels { grid-template-columns: 1fr; }
     .entry { grid-template-columns: 1fr; gap: 4px; }
-    main { box-shadow: 0 0 40px 30px rgba(31,58,95,0.84); }
+    main { box-shadow: 0 0 40px 30px rgba(0,0,0,0.84); }
   }
 </style>
 </head>
